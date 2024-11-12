@@ -1,5 +1,4 @@
 import express from "express"
-import sequelize from "./db";
 import { DataTypes, Model, Sequelize } from "sequelize";
 
 
