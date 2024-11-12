@@ -1,39 +1,17 @@
 import express from "express"
-import sequelize from "./db";
-import { DataTypes, Model, Sequelize } from "sequelize";
+import { loggerMiddle } from "./middleware/logger"
 
-
-// DATABASE START
-
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './database.sqlite'
-});
-
-//Definindo oque é um usuario 
-class User extends Model { }
-User.init({
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
-}, { sequelize, modelName: 'user' });
-// salvando a defini de usuario no Banco
-sequelize.sync();
-
-
+// cria a API 
 const app = express()
 app.use(express.json())
 
-// CRUD routes for User model
-app.get('/users', async (req, res) => {
-    const users = await User.findAll();
-    res.json(users);
-});
-app.post("/", (pergunta, resposta) => {
+// ping
+app.get("/ping",loggerMiddle, (pergunta, resposta) => {
     resposta
         .status(200)
-        .send("ola mundo")
+        .send("pong")
 })
+
 
 
 app.listen(8080, () => {
